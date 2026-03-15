@@ -1,0 +1,110 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+GET http://localhost:8123/api/v1/health
+
+
+###
+GET http://localhost:8123/api/v1/jobs
+
+###
+GET http://localhost:8123/api/v1/jobs/{{id}}
+
+###
+POST http://localhost:8123/api/v1/pack
+
+###
+# curl -X POST "http://localhost:8000/predict"
+#-H "Content-Type: application/json"
+#-d '{
+#  "container": { "length": 10, "width": 10, "height": 10 },
+#  "items": [
+#    { "id": "item-1", "length": 3, "width": 3, "height": 3 },
+#    { "id": "item-2", "length": 4, "width": 4, "height": 4 },
+#    { "id": "item-3", "length": 2, "width": 2, "height": 2 }
+#  ]
+#}'
+POST http://localhost:8000/predict
+Content-Type: application/json
+
+{
+  "container": {
+    "length": 10,
+    "width": 10,
+    "height": 10
+  },
+  "items": [
+    {
+      "id": "item-1",
+      "length": 3,
+      "width": 3,
+      "height": 3
+    },
+    {
+      "id": "item-2",
+      "length": 4,
+      "width": 4,
+      "height": 4
+    },
+    {
+      "id": "item-3",
+      "length": 2,
+      "width": 2,
+      "height": 2
+    }
+  ]
+}
+
+###
+# curl -X POST "http://localhost:8123/api/v1/pack"
+#-H "Content-Type: application/json"
+#-d '{
+#  "containerL": 10,
+#  "containerW": 10,
+#  "containerH": 10,
+#  "items": [
+#    { "name": "Box A", "length": 3, "width": 3, "height": 3 },
+#    { "name": "Box B", "length": 4, "width": 4, "height": 4 }
+#  ]
+#}'
+POST http://localhost:8123/api/v1/pack
+Content-Type: application/json
+
+{
+  "containerL": 10,
+  "containerW": 10,
+  "containerH": 10,
+  "items": [
+    {
+      "name": "Box A",
+      "length": 3,
+      "width": 3,
+      "height": 3
+    },
+    {
+      "name": "Box B",
+      "length": 4,
+      "width": 4,
+      "height": 4
+    }
+  ]
+}
+
+###
+
+POST http://localhost:8123/api/v1/pack
+Content-Type: application/json
+
+{
+  "containerL": 10,
+  "containerW": 10,
+  "containerH": 10,
+  "items": [
+    { "name": "Box A", "length": 3, "width": 3, "height": 3 },
+    { "name": "Box B", "length": 4, "width": 4, "height": 4 }
+  ]
+}
+
+
