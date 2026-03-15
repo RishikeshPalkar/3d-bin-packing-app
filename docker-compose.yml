@@ -1,0 +1,52 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: binpacking-db
+    environment:
+      POSTGRES_DB: binpacking
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Avirishi#72
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d binpacking"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ml-service:
+    build:
+      context: ./ml-service
+    container_name: binpacking-ml
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend/binpacking
+    container_name: binpacking-backend
+    ports:
+      - "8123:8123"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/binpacking
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Avirishi#72
+      ML_SERVICE_URL: http://ml-service:8000
+      SERVER_PORT: 8123
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ml-service:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -1,0 +1,22 @@
+# Backend
+backend/binpacking/target/
+backend/binpacking/.idea/
+backend/binpacking/*.iml
+backend/binpacking/.mvn/wrapper/maven-wrapper.jar
+
+# ML Service
+ml-service/venv/
+ml-service/__pycache__/
+ml-service/*.pyc
+ml-service/*.pth
+
+# Frontend (for later)
+Frontend/mobile/node_modules/
+Frontend/mobile/.expo/
+
+# Docker
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
