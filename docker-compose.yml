@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: binpacking
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Avirishi#72
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-postgres}
     ports:
       - "5432:5432"
     volumes:
@@ -24,7 +24,7 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 15s
       timeout: 10s
       retries: 5
@@ -39,7 +39,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/binpacking
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Avirishi#72
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-postgres}
       ML_SERVICE_URL: http://ml-service:8000
       SERVER_PORT: 8123
     depends_on:
@@ -47,6 +47,27 @@ services:
         condition: service_healthy
       ml-service:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: ./Frontend/mobile
+    container_name: binpacking-frontend
+    profiles:
+      - frontend
+    ports:
+      - "8081:8081"
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+    environment:
+      REACT_NATIVE_PACKAGER_HOSTNAME: 192.168.29.246
+    volumes:
+      - ./Frontend/mobile:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
