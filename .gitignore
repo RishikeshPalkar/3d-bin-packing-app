@@ -10,9 +10,12 @@ ml-service/__pycache__/
 ml-service/*.pyc
 ml-service/*.pth
 
-# Frontend (for later)
+# Frontend
 Frontend/mobile/node_modules/
 Frontend/mobile/.expo/
+
+# IntelliJ
+.idea/
 
 # Docker
 *.env
